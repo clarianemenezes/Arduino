@@ -1,0 +1,84 @@
+const int verde = 13;
+const int amarelo = 12;
+const int vermelho = 11;
+const int verde2 = 10;
+const int amarelo2 = 9;
+const int vermelho2 = 8;
+
+void semaforoPrincipalVerde()
+{
+  digitalWrite(verde,HIGH);
+  digitalWrite(amarelo,LOW); // programação blindada
+  digitalWrite(vermelho,LOW); // programação blindada
+}
+
+void semaforoPrincipalAmarelo()
+{
+  digitalWrite(amarelo, HIGH);
+  digitalWrite(verde,LOW); // programação blindada
+  digitalWrite(vermelho,LOW); // programação blindada
+}
+
+void semaforoPrincipalVermelho()
+{
+  digitalWrite(verde,LOW); // programação blindada
+  digitalWrite(amarelo,LOW); // programação blindada
+  digitalWrite(vermelho, HIGH); // programação blindada
+}
+
+void semaforoAuxiliarVermelho()
+{
+  digitalWrite(verde2,LOW); // programação blindada
+  digitalWrite(amarelo2,LOW); // programação blindada
+  digitalWrite(vermelho2, HIGH);
+}
+
+void semaforoAuxiliarVerde()
+{
+  digitalWrite(verde2, HIGH);
+  digitalWrite(vermelho2,LOW); // programação blindada
+  digitalWrite(amarelo2,LOW); // programação blindada
+}
+
+void semaforoAuxiliarAmarelo()
+{
+  digitalWrite(amarelo2, HIGH);
+  digitalWrite(verde2,LOW); // programação blindada
+  digitalWrite(vermelho2,LOW); // programação blindada
+}
+
+void setup()
+{ // classificando os pinos em leitura - INPUT 
+  // ou em gravação - OUTPUT
+  pinMode(verde, OUTPUT); 
+  pinMode(amarelo, OUTPUT);
+  pinMode(vermelho, OUTPUT);
+  
+  pinMode(verde2, OUTPUT); 
+  pinMode(amarelo2, OUTPUT);
+  pinMode(vermelho2, OUTPUT);
+  
+  digitalWrite(verde,LOW); // programação blindada
+  digitalWrite(amarelo,LOW); // programação blindada
+  digitalWrite(vermelho,LOW); // programação blindada
+  
+  digitalWrite(verde2,LOW); // programação blindada
+  digitalWrite(amarelo2,LOW); // programação blindada
+  digitalWrite(vermelho2,LOW); // programação blindada
+}
+
+void loop()
+{
+  semaforoPrincipalVerde();
+  semaforoAuxiliarVermelho();
+  delay(2000);
+  semaforoPrincipalAmarelo();
+  semaforoAuxiliarVermelho();
+  delay(2000);
+  semaforoPrincipalVermelho();
+  semaforoAuxiliarVerde();
+  delay(2000);
+  semaforoAuxiliarAmarelo();
+  semaforoPrincipalVermelho();
+  delay(2000);
+}
