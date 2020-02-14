@@ -1,0 +1,81 @@
+const int leds [] = {12, 11, 10, 9, 8, 7, 6, 5, 4, 3};
+const int qtdeLeds = 10;
+const int botao = 13;
+const int tempo = 200;
+int statusBotao = LOW;
+int botaoPressionado = LOW;
+
+void acendeLedSentidoHorario()
+{
+  for(int i = 0; i < qtdeLeds; i++)
+  {
+    digitalWrite(leds[i], HIGH);
+    delay(tempo);
+  }
+}
+
+void apagaLedSentidoHorario()
+{
+  for(int i = 0; i < qtdeLeds; i++)
+  {
+    digitalWrite(leds[i], LOW);
+    delay(tempo);
+  }
+}
+
+void acendeLedSentidoAntiHorario()
+{
+  for(int i = qtdeLeds; i > 0; i--)
+  {
+    digitalWrite(leds[i-1], HIGH);
+    delay(tempo);
+  }
+}
+
+void apagaLedSentidoAntiHorario()
+{
+  for(int i = qtdeLeds; i > 0; i--)
+  {
+    digitalWrite(leds[i-1], LOW);
+    delay(tempo);
+  }
+}
+
+void setup()
+{
+  pinMode(botao, INPUT);
+  
+  for(int i = 0; i < qtdeLeds; i++)
+  {
+    pinMode(leds[i], OUTPUT);
+  }
+  
+  for(int i = 0; i < qtdeLeds; i++)
+  {
+    digitalWrite(leds[i], LOW);
+  }
+  
+}
+
+void loop()
+{
+  statusBotao = digitalRead(botao);
+  
+  if(statusBotao == HIGH)
+  {
+    botaoPressionado = !botaoPressionado;
+  }
+  
+  if(botaoPressionado == HIGH)
+  {
+    acendeLedSentidoHorario();
+  	apagaLedSentidoHorario();
+    delay(tempo*4);
+  }
+  else
+  {
+    acendeLedSentidoAntiHorario();
+  	apagaLedSentidoAntiHorario();
+    delay(tempo*4);
+  }
+}
