@@ -1,0 +1,212 @@
+#include <LiquidCrystal.h>
+//                RS ENB D4 D5 D6 D7
+LiquidCrystal lcd(12,11, 5, 4, 3, 2);
+const int ledVermelho = 8;
+const int ledAzul = 7;
+const int ledVerde = 6;
+const int botaoTroca = 10;
+const int botaoTextoLED = 9;
+int statusBotaoTextoLED = LOW;
+int botaoPressionadoLED = LOW;
+int rolagemTexto = LOW;
+int statusBotaoTroca = LOW;
+int botaoPressionadoTroca = LOW;
+int tempo = 800;
+String cores[] = {"Apagado", "Vermelho", "Azul", "Verde", "Amarelo", "Roxo", "Branco"};
+int qtdeCores = 7;
+long posicaoCor = 0;
+
+void inicializaComponentes()
+{
+  digitalWrite(ledVermelho, LOW);
+  digitalWrite(ledAzul, LOW);
+  digitalWrite(ledVerde, LOW);
+  
+  digitalWrite(botaoTextoLED, LOW);
+  digitalWrite(botaoTroca, LOW);
+}
+
+void inicializaLCD()
+{
+  inicializaComponentes();
+  lcd.display();
+}
+
+void inicializaLED()
+{
+  inicializaComponentes();
+  lcd.noDisplay();
+}
+
+void corVermelha()
+{
+  digitalWrite(ledVermelho, HIGH);
+  digitalWrite(ledVerde, LOW);
+  digitalWrite(ledAzul, LOW);
+}
+
+void corAzul()
+{
+  digitalWrite(ledVermelho, LOW);
+  digitalWrite(ledVerde, LOW);
+  digitalWrite(ledAzul, HIGH);
+}
+
+void corVerde()
+{
+  digitalWrite(ledVermelho, LOW);
+  digitalWrite(ledVerde, HIGH);
+  digitalWrite(ledAzul, LOW);
+}
+
+void corAmarela()
+{
+  digitalWrite(ledVermelho, 255);
+  digitalWrite(ledVerde, 50);
+  digitalWrite(ledAzul, 0);
+}
+
+void corRoxa()
+{
+  digitalWrite(ledVermelho, 207);
+  digitalWrite(ledVerde, 0);
+  digitalWrite(ledAzul, 207);
+}
+
+void corBranca()
+{
+  digitalWrite(ledVermelho, HIGH);
+  digitalWrite(ledVerde, HIGH);
+  digitalWrite(ledAzul, HIGH);
+}
+
+void ledApagado()
+{
+  digitalWrite(ledVermelho, LOW);
+  digitalWrite(ledVerde, LOW);
+  digitalWrite(ledAzul, LOW);
+}
+
+void setup()
+{
+  Serial.begin(9600);
+  randomSeed(analogRead(A0));
+  
+  lcd.begin(16, 2); // define o número de colunas e linhas do LCD
+  
+  pinMode(ledVermelho, OUTPUT);
+  pinMode(ledAzul, OUTPUT);
+  pinMode(ledVerde, OUTPUT);
+  
+  pinMode(botaoTextoLED, INPUT);
+  pinMode(botaoTroca, INPUT);
+  
+  digitalWrite(ledVermelho, LOW);
+  digitalWrite(ledAzul, LOW);
+  digitalWrite(ledVerde, LOW);
+  
+  digitalWrite(botaoTextoLED, LOW);
+  digitalWrite(botaoTroca, LOW);
+  
+  lcd.noDisplay();
+}
+ 
+void loop()
+{
+  statusBotaoTroca = digitalRead(botaoTroca);
+  if(statusBotaoTroca == HIGH) // verifica se botao foi pressionado
+  { botaoPressionadoTroca = !botaoPressionadoTroca;
+  }
+  
+  if(botaoPressionadoTroca == HIGH)
+  { // tela lcd funcionando
+    inicializaLCD();
+    lcd.clear(); // limpa a tela do LCD
+    delay(1000); // espera um segundo antes de exibir o texto
+
+    lcd.setCursor(1, 0); // posiciona cursor na col 0 e lin 0
+    lcd.print("TESTE LCD 16x2");
+    lcd.setCursor(1, 1);
+    lcd.print(" CURSO ARDUINO"); 
+    delay(2000);
+
+    statusBotaoTextoLED = digitalRead(botaoTextoLED);
+    if(statusBotaoTextoLED == HIGH) // verifica se botao foi pressionado
+    { botaoPressionadoLED = !botaoPressionadoLED;
+      rolagemTexto = !rolagemTexto;
+    }
+
+    lcd.clear();
+    if(botaoPressionadoLED == HIGH)
+    {
+      lcd.setCursor(0, 0);
+      lcd.print("ANEDOTA VOLATIL");
+      lcd.setCursor(0, 1);
+      lcd.print("ESQ ESQ ESQ");
+    }
+    else
+    {
+      lcd.setCursor(0, 0);
+      lcd.print("ARDUINO HILARIO");
+      lcd.setCursor(0, 1);
+      lcd.print("DIR DIR DIR");
+    }
+    delay(2000);
+
+    if(rolagemTexto == HIGH){
+      for (int posicao = 0; posicao < 16; posicao++){
+          lcd.scrollDisplayLeft(); // rolagem para a esquerda
+          delay(300);
+      }
+    }
+    else {
+      for (int posicao = 0; posicao < 16; posicao++){
+          lcd.scrollDisplayRight(); // rolagem para a direita
+          delay(300);
+      }
+    }
+
+    delay(1000);
+  }
+  else
+  { // led rgb funcionando
+    inicializaLED();
+    posicaoCor = random(1, qtdeCores); // sorteia cor a ser mostrada no led rgb
+    
+    if(cores[posicaoCor] == "Apagado")
+    {
+      ledApagado();
+      delay(tempo);
+    }
+    else if(cores[posicaoCor] == "Vermelho")
+    {
+      corVermelha();
+      delay(tempo);
+    }
+    else if(cores[posicaoCor] == "Azul")
+    {
+      corAzul();
+      delay(tempo);
+    }
+    else if(cores[posicaoCor] == "Verde")
+    {
+      corVerde();
+      delay(tempo);
+    }
+    else if(cores[posicaoCor] == "Amarelo")
+    {
+      corAmarela();
+      delay(tempo);
+    }
+    else if(cores[posicaoCor] == "Roxo")
+    {
+      corRoxa();
+      delay(tempo);
+    }
+    else if(cores[posicaoCor] == "Branco")
+    {
+      corBranca();
+      delay(tempo);
+    }
+  }  
+}
