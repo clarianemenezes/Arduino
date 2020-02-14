@@ -1,0 +1,38 @@
+int leds[] = {13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2};
+int sequencia = 0;
+
+void setup()
+{
+  for(sequencia = 0; sequencia < 12; sequencia++)
+  {
+    pinMode(leds[sequencia], OUTPUT);
+  }
+  for(sequencia = 0; sequencia < 12; sequencia++)
+  {
+    digitalWrite(leds[sequencia], LOW);
+  }
+}
+
+void acende(int tempo)
+{
+  for(sequencia = 0; sequencia < 12; sequencia++)
+  {
+    digitalWrite(leds[sequencia], HIGH);
+    delay(tempo);
+  }
+}
+
+void apaga(int tempo)
+{
+  for(sequencia = 0; sequencia < 12; sequencia++)
+  {
+    digitalWrite(leds[sequencia], LOW);
+    delay(tempo);
+  }
+}
+
+void loop()
+{
+  acende(500);
+  apaga(500);
+}
