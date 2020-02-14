@@ -1,0 +1,75 @@
+const int ledVermelho = 12;
+const int ledAzul = 11;
+const int ledVerde = 10;
+const int tempo = 2000;
+
+String cor;
+
+void corVermelha()
+{
+  digitalWrite(ledVermelho, HIGH);
+  digitalWrite(ledVerde, LOW);
+  digitalWrite(ledAzul, LOW);
+}
+
+void corAzul()
+{
+  digitalWrite(ledVermelho, LOW);
+  digitalWrite(ledVerde, LOW);
+  digitalWrite(ledAzul, HIGH);
+}
+
+void corVerde()
+{
+  digitalWrite(ledVermelho, LOW);
+  digitalWrite(ledVerde, HIGH);
+  digitalWrite(ledAzul, LOW);
+}
+
+void corAmarela()
+{
+  digitalWrite(ledVermelho, 255);
+  digitalWrite(ledVerde, 50);
+  digitalWrite(ledAzul, 0);
+}
+
+void corRoxa()
+{
+  digitalWrite(ledVermelho, 207);
+  digitalWrite(ledVerde, 0);
+  digitalWrite(ledAzul, 207);
+}
+
+void corBranca()
+{
+  digitalWrite(ledVermelho, HIGH);
+  digitalWrite(ledVerde, HIGH);
+  digitalWrite(ledAzul, HIGH);
+}
+
+void setup()
+{
+  pinMode(ledVermelho, OUTPUT);
+  pinMode(ledAzul, OUTPUT);
+  pinMode(ledVerde, OUTPUT);
+  
+  digitalWrite(ledVermelho, LOW);
+  digitalWrite(ledAzul, LOW);
+  digitalWrite(ledVerde, LOW);
+}
+
+void loop()
+{
+  corVermelha();
+  delay(tempo); 
+  corVerde();
+  delay(tempo); 
+  corAzul();
+  delay(tempo); 
+  corAmarela();
+  delay(tempo); 
+  corRoxa();
+  delay(tempo); 
+  corBranca();
+  delay(tempo); 
+}
